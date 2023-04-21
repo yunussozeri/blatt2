@@ -13,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class PM2MapTest {
     
+    private  PM2Map testmap = new PM2Map();
     public PM2MapTest() {
-        
+       
     }
 
     /**
@@ -22,13 +23,20 @@ public class PM2MapTest {
      */
     @Test
     public void testSize() {
-        System.out.println("size");
-        PM2Map instance = null;
-        int expResult = 0;
-        int result = instance.size();
+        int expResult = 10;
+        testmap.put("A",1);
+        testmap.put("B", 2);
+        testmap.put("C",3);
+        testmap.put("D", 4);
+        testmap.put("E",5);
+        testmap.put("F", 6);
+        testmap.put("G",7);
+        testmap.put("H", 8);
+        testmap.put("I",9);
+        testmap.put("J", 10);
+        int result = testmap.size();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -36,43 +44,63 @@ public class PM2MapTest {
      */
     @Test
     public void testIsEmpty() {
-        System.out.println("isEmpty");
-        PM2Map instance = null;
+        
+        
         boolean expResult = false;
-        boolean result = instance.isEmpty();
+        testmap.put("a", 1);
+        boolean result = testmap.isEmpty();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
      * Test of containsKey method, of class PM2Map.
      */
     @Test
-    public void testContainsKey() {
-        System.out.println("containsKey");
-        Object key = null;
-        PM2Map instance = null;
+    public void testContainsKeyNegative() {
+        
+        String key = "A";
+        testmap.put("B",5);
         boolean expResult = false;
-        boolean result = instance.containsKey(key);
+        boolean result = testmap.containsKey(key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+      
+    }
+    
+    @Test
+    public void testContainsKeyPositive() {
+        
+        String key = "A";
+        testmap.put(key,0);
+        boolean expResult = true;
+        boolean result = testmap.containsKey(key);
+        assertEquals(expResult, result);
+          
     }
 
     /**
      * Test of containsValue method, of class PM2Map.
      */
     @Test
-    public void testContainsValue() {
-        System.out.println("containsValue");
-        Object value = null;
-        PM2Map instance = null;
-        boolean expResult = false;
-        boolean result = instance.containsValue(value);
+    public void testContainsValuePositive() {
+        
+        Integer value = 6;
+        testmap.put("A",value);
+        boolean expResult = true;
+        boolean result = testmap.containsValue(value);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    @Test
+    public void testContainsValueNegative() {
+        
+        Integer value = 5;
+        testmap.put("A",6);
+        boolean expResult = false;
+        boolean result = testmap.containsValue(value);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -80,14 +108,13 @@ public class PM2MapTest {
      */
     @Test
     public void testGet() {
-        System.out.println("get");
-        Object key = null;
-        PM2Map instance = null;
-        Object expResult = null;
-        Object result = instance.get(key);
+        
+        String key = "A";
+        Integer value = 5;
+        testmap.put(key, value);
+        Object expResult = 5;
+        Object result = testmap.get(key);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -95,15 +122,11 @@ public class PM2MapTest {
      */
     @Test
     public void testPut() {
-        System.out.println("put");
-        Object key = null;
-        Object value = null;
-        PM2Map instance = null;
-        Object expResult = null;
-        Object result = instance.put(key, value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        String key = "A";
+        Integer value = 1;
+        testmap.put(key, value);
+        assertEquals(value, testmap.put(key, 2));
     }
 
     /**
@@ -111,12 +134,10 @@ public class PM2MapTest {
      */
     @Test
     public void testRemove() {
-        System.out.println("remove");
-        Object key = null;
-        PM2Map instance = null;
-        Object expResult = null;
-        Object result = instance.remove(key);
-        assertEquals(expResult, result);
+        
+        Object key = "A";
+        Object result = testmap.remove(key);
+        assertEquals(null, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -126,10 +147,10 @@ public class PM2MapTest {
      */
     @Test
     public void testPutAll() {
-        System.out.println("putAll");
+        
         Map m = null;
-        PM2Map instance = null;
-        instance.putAll(m);
+        testmap.put("A", 5);
+        
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -139,11 +160,10 @@ public class PM2MapTest {
      */
     @Test
     public void testClear() {
-        System.out.println("clear");
-        PM2Map instance = null;
-        instance.clear();
+        
+        testmap.clear();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(0,testmap.size());
     }
 
     /**
@@ -151,11 +171,11 @@ public class PM2MapTest {
      */
     @Test
     public void testKeySet() {
-        System.out.println("keySet");
-        PM2Map instance = null;
-        Set expResult = null;
-        Set result = instance.keySet();
-        assertEquals(expResult, result);
+        
+//        PM2Map instance = null;
+//        Set expResult = null;
+//        Set result = instance.keySet();
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -165,11 +185,11 @@ public class PM2MapTest {
      */
     @Test
     public void testValues() {
-        System.out.println("values");
-        PM2Map instance = null;
-        Collection expResult = null;
-        Collection result = instance.values();
-        assertEquals(expResult, result);
+       
+//        PM2Map instance = null;
+//        Collection expResult = null;
+//        Collection result = instance.values();
+//        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -179,8 +199,8 @@ public class PM2MapTest {
      */
     @Test
     public void testEntrySet() {
-        System.out.println("entrySet");
-        PM2Map instance = null;
+        
+       // PM2Map instance = null;
 //        Set<Map.Entry<K, V>> expResult = null;
 //        Set<Map.Entry<K, V>> result = instance.entrySet();
 //        assertEquals(expResult, result);

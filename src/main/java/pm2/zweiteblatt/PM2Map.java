@@ -13,13 +13,13 @@ public class PM2Map<K, V> implements Map<K, V> {
     private MapPaar<K, V>[] pairs;
     private int size;
     private int cardinality;
-    private MapPaar last;
 
     /**
-     * Constructor for PM2Map Object.
+     * Constructor for PM2Map Object with a standard size of 10.
      */
     public PM2Map() {
-        size = 0;
+        this.pairs = new MapPaar[10];
+        size = pairs.length;
         cardinality = 0;
     }
 
@@ -30,7 +30,7 @@ public class PM2Map<K, V> implements Map<K, V> {
      */
     public PM2Map(MapPaar<K, V>[] pairs) {
         this.pairs = pairs;
-        size = 0;
+        size = pairs.length;
         cardinality = 0;
     }
 
@@ -129,7 +129,6 @@ public class PM2Map<K, V> implements Map<K, V> {
      */
     @Override
     public V put(K key, V value) {
-
         // if the key already exists, 
         if (containsKey(key)) {
             //replace the value and 
@@ -144,17 +143,18 @@ public class PM2Map<K, V> implements Map<K, V> {
                 }
             }
         }
-
         // check size
         if (cardinality == size) {
             // increase size if needed
             increaseSize();
         }
 
-        MapPaar<K, V> pair = new MapPaar<K, V>(key, value);
-        // loop until last element
+        MapPaar<K, V> pair = new MapPaar<>(key, value);
+        // add element to map
+        pairs[cardinality] = pair;
+        // increase cardinality
+        cardinality++;
         // add new element to the next index
-
         return null;
     }
 
@@ -165,6 +165,7 @@ public class PM2Map<K, V> implements Map<K, V> {
         MapPaar<K, V>[] largerArray = new MapPaar[size * 2];
         System.arraycopy(pairs, 0, largerArray, 0, size);
         pairs = largerArray;
+        size = pairs.length;
     }
 
     /**
@@ -191,6 +192,7 @@ public class PM2Map<K, V> implements Map<K, V> {
         for (int i = 0; i < cardinality; i++) {
             pairs[i] = null;
         }
+        cardinality = 0;
     }
 
     @Override
@@ -208,4 +210,13 @@ public class PM2Map<K, V> implements Map<K, V> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void printElements(){
+        for(var pair : pairs){
+            if(pair != null){
+            System.out.println("Key: "+ pair.getKey() + " Val: "+pair.getValue());
+            } else{
+                 System.out.println("null item");
+            }
+        }
+    }
 }
