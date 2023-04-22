@@ -39,6 +39,6 @@ public class MapPaar <K,V> implements Map.Entry<K, V>{
     }
     
     public boolean isEmpty(){
-        return !key.equals((K)"LEER");
+        return key.equals((K)"LEER");
     }
 }
