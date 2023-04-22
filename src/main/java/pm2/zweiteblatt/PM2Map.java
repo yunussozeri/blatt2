@@ -1,6 +1,7 @@
 package pm2.zweiteblatt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -216,7 +217,7 @@ public class PM2Map<K, V> implements Map<K, V> {
      */
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        
+        // source: https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
         m.forEach((key, value) -> put(key,value));
     }
 
@@ -270,9 +271,21 @@ public class PM2Map<K, V> implements Map<K, V> {
         return values;
     }
 
+    /**
+     * Gives a set of all the non empty entries in the PM2Map.
+     * @return entries is the set of all non empty entries.
+     */
     @Override
     public Set<Entry<K, V>> entrySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Set<Entry<K, V>> entries = new HashSet<>();
+        var pairsAsList = Arrays.asList(pairs);
+        
+        // go through each pair and add the pair to the set
+        pairsAsList.forEach((pair) -> entries.add(pair));
+        // remove null by hand bcs standard size may cause problems
+        entries.remove(null);
+        
+        return entries;
     }
 
     public void printElements() {

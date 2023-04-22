@@ -37,4 +37,8 @@ public class MapPaar <K,V> implements Map.Entry<K, V>{
        this.value = (V) value;
        return previous;
     }
+    
+    public boolean isEmpty(){
+        return !key.equals((K)"LEER");
+    }
 }
