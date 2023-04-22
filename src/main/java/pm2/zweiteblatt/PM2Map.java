@@ -1,6 +1,7 @@
 package pm2.zweiteblatt;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,8 +26,8 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     /**
      * PM2Map Constructor with generic MapPaar array parameter.
-     * 
-     * @param pairs 
+     *
+     * @param pairs
      */
     public PM2Map(MapPaar<K, V>[] pairs) {
         this.pairs = pairs;
@@ -35,9 +36,9 @@ public class PM2Map<K, V> implements Map<K, V> {
     }
 
     /**
-     * Returns the cardinality of the Map.
-     * This gives information on how many elements are contained in the PM2Map.
-     * 
+     * Returns the cardinality of the Map. This gives information on how many
+     * elements are contained in the PM2Map.
+     *
      * @return cardinality, the number of elements
      */
     @Override
@@ -47,9 +48,9 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     /**
      * Tells if the PM2Map is empty.
-     * 
-     * @return true, if there is no elements contained.
-     *         false, if there are some elements contained.
+     *
+     * @return true, if there is no elements contained. false, if there are some
+     * elements contained.
      */
     @Override
     public boolean isEmpty() {
@@ -58,10 +59,10 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     /**
      * Checks if the given key exists in the PM2Map.
-     * 
+     *
      * @param key the key that is searched for.
-     * @return true, if the key already exists.
-     *         false, if the key does not exists.
+     * @return true, if the key already exists. false, if the key does not
+     * exists.
      */
     @Override
     public boolean containsKey(Object key) {
@@ -77,10 +78,10 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     /**
      * Checks if the given value exists in the PM2Map.
-     * 
+     *
      * @param value the key that is searched for.
-     * @return true, if the value already exists.
-     *         false, if the value does not exist.
+     * @return true, if the value already exists. false, if the value does not
+     * exist.
      */
     @Override
     public boolean containsValue(Object value) {
@@ -93,13 +94,12 @@ public class PM2Map<K, V> implements Map<K, V> {
         }
         return false;
     }
-    
+
     /**
      * Returns the value for a given key in PM2Map.
-     * 
+     *
      * @param key the key that is searched for.
-     * @return val the value stored by the key.
-     *         null, if the key does not exist.
+     * @return val the value stored by the key. null, if the key does not exist.
      */
     @Override
     public V get(Object key) {
@@ -115,17 +115,15 @@ public class PM2Map<K, V> implements Map<K, V> {
     }
 
     /**
-     * Puts a key-value pair into the Map.
-     * If the key already exists, then the value is replaced 
-     * and the old value is returned.
-     * If the key does not exist, 
-     * a new key-value pair is appended to the list,
-     * and null is returned.
-     * 
+     * Puts a key-value pair into the Map. If the key already exists, then the
+     * value is replaced and the old value is returned. If the key does not
+     * exist, a new key-value pair is appended to the list, and null is
+     * returned.
+     *
      * @param key the key that shall be added
      * @param value the value that shall be added.
-     * @return oldValue, if the key already exists.
-     *         null, if a new element is appended.
+     * @return oldValue, if the key already exists. null, if a new element is
+     * appended.
      */
     @Override
     public V put(K key, V value) {
@@ -144,7 +142,7 @@ public class PM2Map<K, V> implements Map<K, V> {
             }
         }
         // check size
-        if (cardinality == size) {
+        if (isFull()) {
             // increase size if needed
             increaseSize();
         }
@@ -156,6 +154,10 @@ public class PM2Map<K, V> implements Map<K, V> {
         cardinality++;
         // add new element to the next index
         return null;
+    }
+
+    private boolean isFull() {
+        return cardinality == size;
     }
 
     /**
@@ -170,13 +172,35 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     /**
      * Removes the key-value pair with the given key from the PM2Map.
-     * 
+     *
      * @param key is the key that is searched.
-     * @return value is the value of the pair that is removed.
+     * @return value is the value of the pair that is removed. null, if the key
+     * does not exist
      */
     @Override
     public V remove(Object key) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int index = 0;
+        
+        if (containsKey(key)) { // if the key exists start searching
+            for (var pair : pairs) {
+                if (pair != null) {
+                    // when the key is founded
+                    if (pair.getKey().equals(key)) {
+                        //store old value
+                        V oldValue = pair.getValue();
+                        //replace current pair with an empty pair
+                        pairs[index] = new MapPaar();
+                        // decrease cardinality by one
+                        cardinality--;
+                        // return the old value
+                        return oldValue;
+                    } else{ // increment index until key is found
+                        index++;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -195,9 +219,25 @@ public class PM2Map<K, V> implements Map<K, V> {
         cardinality = 0;
     }
 
+    /**
+     * Creates a set of all the keys in the PM2Map.
+     *
+     * @return keys, the set containing all keys
+     */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // create a set to store the keys
+        Set<K> keys = new HashSet<>();
+        for (var pair : pairs) {
+            if (pair != null && !pair.getKey().equals(new MapPaar().getKey())) {
+                // get the current key
+                K currKey = pair.getKey();
+                // add to the set
+                keys.add(currKey);
+            }
+        }
+        // return the keys
+        return keys;
     }
 
     @Override
@@ -210,12 +250,12 @@ public class PM2Map<K, V> implements Map<K, V> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void printElements(){
-        for(var pair : pairs){
-            if(pair != null){
-            System.out.println("Key: "+ pair.getKey() + " Val: "+pair.getValue());
-            } else{
-                 System.out.println("null item");
+    public void printElements() {
+        for (var pair : pairs) {
+            if (pair != null) {
+                System.out.println("Key: " + pair.getKey() + " Val: " + pair.getValue());
+            } else {
+                System.out.println("null item");
             }
         }
     }

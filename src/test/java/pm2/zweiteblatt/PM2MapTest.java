@@ -2,6 +2,7 @@
 package pm2.zweiteblatt;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -135,11 +136,40 @@ public class PM2MapTest {
     @Test
     public void testRemove() {
         
-        Object key = "A";
-        Object result = testmap.remove(key);
-        assertEquals(null, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       String[] keyArr ={"A","yunus","oskar"};
+        testmap.put(keyArr[0],1);
+        testmap.put(keyArr[1],31);
+        testmap.put(keyArr[2],32);
+        
+        testmap.remove(keyArr[0]);
+        assertEquals(2, testmap.size());
+        
+    }
+    
+    @Test
+    public void testRemoveAllByHand() {
+        
+       String[] keyArr ={"A","yunus","oskar"};
+        testmap.put(keyArr[0],1);
+        testmap.put(keyArr[1],31);
+        testmap.put(keyArr[2],32);
+        
+        testmap.remove(keyArr[0]);
+        testmap.remove(keyArr[1]);
+        testmap.remove(keyArr[2]);
+        
+        assertEquals(0, testmap.size());
+    }
+    
+    @Test
+    public void testRemoveNonExistentKey() {
+        
+       String[] keyArr ={"A","yunus","oskar","Meine wille zum Leben"};
+        testmap.put(keyArr[0],1);
+        testmap.put(keyArr[1],31);
+        testmap.put(keyArr[2],32);
+        
+        assertEquals(null, testmap.remove(keyArr[3]));
     }
 
     /**
@@ -161,6 +191,10 @@ public class PM2MapTest {
     @Test
     public void testClear() {
         
+        String[] keyArr ={"A","yunus","oskar"};
+        testmap.put(keyArr[0],1);
+        testmap.put(keyArr[1],31);
+        testmap.put(keyArr[2],32);
         testmap.clear();
         // TODO review the generated test code and remove the default call to fail.
         assertEquals(0,testmap.size());
@@ -172,12 +206,17 @@ public class PM2MapTest {
     @Test
     public void testKeySet() {
         
-//        PM2Map instance = null;
-//        Set expResult = null;
-//        Set result = instance.keySet();
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String[] keyArr ={"A","yunus","oskar"};
+        testmap.put(keyArr[0],1);
+        testmap.put(keyArr[1],31);
+        testmap.put(keyArr[2],32);
+        
+        Set keys = testmap.keySet();
+        
+        assertEquals(true,keys.contains(keyArr[0]));
+        assertEquals(true,keys.contains(keyArr[1]));
+        assertEquals(true,keys.contains(keyArr[2]));
+
     }
 
     /**
