@@ -173,6 +173,8 @@ public class PM2MapTest {
 
         testmap.remove(keyArr[0]);
         testmap.remove(keyArr[1]);
+        
+        assertEquals(1, testmap.size());
         testmap.remove(keyArr[2]);
 
         assertEquals(0, testmap.size());

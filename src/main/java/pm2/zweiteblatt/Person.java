@@ -39,32 +39,62 @@ public class Person implements Comparable<Person> {
             int geburtsmonat,
             int geburtstag,
             int anzahlKinder) {
+        //TODO: Precondition, birth year not smaller than 1900
+        //TODO: Precondition number of children is larger or equal to 0.
         this.vorname = vorname;
         this.nachname = nachname;
         this.geburtsdatum = LocalDate.of(geburtsjahr, geburtsmonat, geburtstag);
         this.anzahlKinder = anzahlKinder;
     }
 
+    /**
+     * Returns the name.
+     * @return vorname is the name
+     */
     public String getVorname() {
         return vorname;
     }
 
+    /**
+     * Returns the number of children.
+     * @return anzahlkinder is the number of children
+     */
     public int getAnzahlKinder() {
         return anzahlKinder;
     }
 
+    /**
+     * Modifies the number of children.
+     * Cannot be smaller than 0.
+     * @param anzahlKinder is the new number of children.
+     */
     public void setAnzahlKinder(int anzahlKinder) {
+        if(anzahlKinder < 0){
+            return;
+        }
         this.anzahlKinder = anzahlKinder;
     }
 
+    /**
+     * Gets the surname.
+     * @return nachname is the surname
+     */
     public String getNachname() {
         return nachname;
     }
 
+    /**
+     * Changes the surname.
+     * @param nachname is the new surname.
+     */
     public void setNachname(String nachname) {
         this.nachname = nachname;
     }
-
+    
+    /**
+     * Gets the birth date of person
+     * @return geburtsdatum is the birthday of the person.
+     */
     public LocalDate getGeburtsdatum() {
         return geburtsdatum;
     }
@@ -89,10 +119,7 @@ public class Person implements Comparable<Person> {
 
         hash = hash + hashmultiplier * geburtsdatum.getDayOfMonth();
 //        
-        hash = hash + hashmultiplier * geburtsdatum.getDayOfYear();
-//        
-//      hash = hash + hashmultiplier * geburtsdatum.getDayOfYear()%(hashbase*hashbase);
-//        
+        hash = hash + hashmultiplier * geburtsdatum.getDayOfYear();    
         
         return hash;
     }
@@ -130,6 +157,10 @@ public class Person implements Comparable<Person> {
         return getGeburtsdatum().equals(p.getGeburtsdatum());
     }
 
+    /**
+     * Gives a string version of the person.
+     * @return the string containing all information about the person. 
+     */
     @Override
     public String toString() {
         
@@ -159,7 +190,6 @@ public class Person implements Comparable<Person> {
             result = -1;
         }
         return result;
-
     }
 
 }
