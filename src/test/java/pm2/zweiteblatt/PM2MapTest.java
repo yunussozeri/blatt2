@@ -1,7 +1,8 @@
-
 package pm2.zweiteblatt;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author yunussozeri
  */
 public class PM2MapTest {
-    
-    private  PM2Map testmap = new PM2Map();
+
+    private PM2Map testmap = new PM2Map();
+
     public PM2MapTest() {
-       
+
     }
 
     /**
@@ -25,19 +27,19 @@ public class PM2MapTest {
     @Test
     public void testSize() {
         int expResult = 10;
-        testmap.put("A",1);
+        testmap.put("A", 1);
         testmap.put("B", 2);
-        testmap.put("C",3);
+        testmap.put("C", 3);
         testmap.put("D", 4);
-        testmap.put("E",5);
+        testmap.put("E", 5);
         testmap.put("F", 6);
-        testmap.put("G",7);
+        testmap.put("G", 7);
         testmap.put("H", 8);
-        testmap.put("I",9);
+        testmap.put("I", 9);
         testmap.put("J", 10);
         int result = testmap.size();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -45,14 +47,13 @@ public class PM2MapTest {
      */
     @Test
     public void testIsEmpty() {
-        
-        
+
         boolean expResult = false;
         testmap.put("a", 1);
         boolean result = testmap.isEmpty();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -60,25 +61,24 @@ public class PM2MapTest {
      */
     @Test
     public void testContainsKeyNegative() {
-        
+
         String key = "A";
-        testmap.put("B",5);
+        testmap.put("B", 5);
         boolean expResult = false;
         boolean result = testmap.containsKey(key);
         assertEquals(expResult, result);
-        
-      
+
     }
-    
+
     @Test
     public void testContainsKeyPositive() {
-        
+
         String key = "A";
-        testmap.put(key,0);
+        testmap.put(key, 0);
         boolean expResult = true;
         boolean result = testmap.containsKey(key);
         assertEquals(expResult, result);
-          
+
     }
 
     /**
@@ -86,19 +86,19 @@ public class PM2MapTest {
      */
     @Test
     public void testContainsValuePositive() {
-        
+
         Integer value = 6;
-        testmap.put("A",value);
+        testmap.put("A", value);
         boolean expResult = true;
         boolean result = testmap.containsValue(value);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testContainsValueNegative() {
-        
+
         Integer value = 5;
-        testmap.put("A",6);
+        testmap.put("A", 6);
         boolean expResult = false;
         boolean result = testmap.containsValue(value);
         assertEquals(expResult, result);
@@ -109,7 +109,7 @@ public class PM2MapTest {
      */
     @Test
     public void testGet() {
-        
+
         String key = "A";
         Integer value = 5;
         testmap.put(key, value);
@@ -123,7 +123,7 @@ public class PM2MapTest {
      */
     @Test
     public void testPut() {
-        
+
         String key = "A";
         Integer value = 1;
         testmap.put(key, value);
@@ -135,40 +135,40 @@ public class PM2MapTest {
      */
     @Test
     public void testRemove() {
-        
-       String[] keyArr ={"A","yunus","oskar"};
-        testmap.put(keyArr[0],1);
-        testmap.put(keyArr[1],31);
-        testmap.put(keyArr[2],32);
-        
+
+        String[] keyArr = {"A", "yunus", "oskar"};
+        testmap.put(keyArr[0], 1);
+        testmap.put(keyArr[1], 31);
+        testmap.put(keyArr[2], 32);
+
         testmap.remove(keyArr[0]);
         assertEquals(2, testmap.size());
-        
+
     }
-    
+
     @Test
     public void testRemoveAllByHand() {
-        
-       String[] keyArr ={"A","yunus","oskar"};
-        testmap.put(keyArr[0],1);
-        testmap.put(keyArr[1],31);
-        testmap.put(keyArr[2],32);
-        
+
+        String[] keyArr = {"A", "yunus", "oskar"};
+        testmap.put(keyArr[0], 1);
+        testmap.put(keyArr[1], 31);
+        testmap.put(keyArr[2], 32);
+
         testmap.remove(keyArr[0]);
         testmap.remove(keyArr[1]);
         testmap.remove(keyArr[2]);
-        
+
         assertEquals(0, testmap.size());
     }
-    
+
     @Test
     public void testRemoveNonExistentKey() {
-        
-       String[] keyArr ={"A","yunus","oskar","Meine wille zum Leben"};
-        testmap.put(keyArr[0],1);
-        testmap.put(keyArr[1],31);
-        testmap.put(keyArr[2],32);
-        
+
+        String[] keyArr = {"A", "yunus", "oskar", "Meine wille zum Leben"};
+        testmap.put(keyArr[0], 1);
+        testmap.put(keyArr[1], 31);
+        testmap.put(keyArr[2], 32);
+
         assertEquals(null, testmap.remove(keyArr[3]));
     }
 
@@ -177,12 +177,41 @@ public class PM2MapTest {
      */
     @Test
     public void testPutAll() {
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("A", 1);
+        map.put("B", 2);
+        map.put("C", 3);
         
-        Map m = null;
-        testmap.put("A", 5);
         
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testmap.putAll(map);
+        Set<String> expectedKeys = map.keySet();
+        
+        assertEquals(3, testmap.size());
+        assertEquals(1, map.get("A"));
+        assertEquals(2, map.get("B"));
+        assertEquals(3, map.get("C"));
+        
+        map.put("D", 4);
+        map.put("E", 5);
+        
+        testmap.putAll(map);
+        
+        assertEquals(5, testmap.size());
+        assertEquals(4, map.get("D"));
+        assertEquals(5, map.get("E"));
+       
+        assertEquals(expectedKeys,testmap.keySet());
+        
+    }
+    
+    @Test
+    public void testPutAllEmptyMap() {
+        
+        Map<String, Integer> emptyMap = new HashMap<>();
+        testmap.putAll(emptyMap);
+        
+        assertTrue(testmap.isEmpty());
     }
 
     /**
@@ -190,47 +219,48 @@ public class PM2MapTest {
      */
     @Test
     public void testClear() {
-        
-        String[] keyArr ={"A","yunus","oskar"};
-        testmap.put(keyArr[0],1);
-        testmap.put(keyArr[1],31);
-        testmap.put(keyArr[2],32);
+
+        String[] keyArr = {"A", "yunus", "oskar"};
+        testmap.put(keyArr[0], 1);
+        testmap.put(keyArr[1], 31);
+        testmap.put(keyArr[2], 32);
         testmap.clear();
         // TODO review the generated test code and remove the default call to fail.
-        assertEquals(0,testmap.size());
+        assertEquals(0, testmap.size());
     }
 
-    /**
-     * Test of keySet method, of class PM2Map.
-     */
-    @Test
-    public void testKeySet() {
-        
-        String[] keyArr ={"A","yunus","oskar"};
-        testmap.put(keyArr[0],1);
-        testmap.put(keyArr[1],31);
-        testmap.put(keyArr[2],32);
-        
-        Set keys = testmap.keySet();
-        
-        assertEquals(true,keys.contains(keyArr[0]));
-        assertEquals(true,keys.contains(keyArr[1]));
-        assertEquals(true,keys.contains(keyArr[2]));
-
-    }
-
-    /**
+    
+     /**
      * Test of values method, of class PM2Map.
      */
     @Test
-    public void testValues() {
-       
-//        PM2Map instance = null;
-//        Collection expResult = null;
-//        Collection result = instance.values();
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testValuesEmptyMap() {
+        
+        Collection<Integer> expectedValues = new ArrayList<>();
+        assertEquals(expectedValues, testmap.values());
+    }
+    @Test
+    public void testValuesNonEmptyMap() {
+        
+        testmap.put("key1", 1);
+        testmap.put("key2", 2);
+        testmap.put("key3", 3);
+        Collection<Integer> expectedValues = new ArrayList<>();
+        expectedValues.add(1);
+        expectedValues.add(2);
+        expectedValues.add(3);
+        assertEquals(expectedValues, testmap.values());
+    }
+
+    @Test
+    public void testValuesMapWithNullValues() {
+        
+        testmap.put("key1", null);
+        testmap.put("key2", null);
+        Collection<Integer> expectedValues = new ArrayList<>();
+        expectedValues.add(null);
+        expectedValues.add(null);
+        assertEquals(expectedValues, testmap.values());
     }
 
     /**
@@ -238,13 +268,70 @@ public class PM2MapTest {
      */
     @Test
     public void testEntrySet() {
-        
-       // PM2Map instance = null;
+
+        // PM2Map instance = null;
 //        Set<Map.Entry<K, V>> expResult = null;
 //        Set<Map.Entry<K, V>> result = instance.entrySet();
 //        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
+    /**
+     * Test of keySet method, of class PM2Map.
+     */
+    @Test
+    public void testKeySet() {
+
+        String[] keyArr = {"A", "yunus", "oskar"};
+        testmap.put(keyArr[0], 1);
+        testmap.put(keyArr[1], 31);
+        testmap.put(keyArr[2], 32);
+
+        Set keys = testmap.keySet();
+
+        assertEquals(true, keys.contains(keyArr[0]));
+        assertEquals(true, keys.contains(keyArr[1]));
+        assertEquals(true, keys.contains(keyArr[2]));
+
+    }
+    @Test
+    public void testKeySetEmpty() {
+        assertTrue(testmap.keySet().isEmpty());
+    }
+
+    @Test
+    public void testKeySetSingle() {
+
+        testmap.put("foo", 42);
+        assertTrue(testmap.keySet().contains("foo"));
+    }
+
+    @Test
+    public void testKeySetMultiple() {
+
+        testmap.put("foo", 42);
+        testmap.put("bar", 99);
+        testmap.put("baz", -1);
+        assertTrue(testmap.keySet().containsAll(Set.of("foo", "bar", "baz")));
+    }
+
+    @Test
+    public void testKeySetNullKey() {
+
+        testmap.put(null, 42);
+        Set<String> expectedKeys = new HashSet<>();
+        expectedKeys.add(null);
+        assertEquals(expectedKeys, testmap.keySet());
+    }
+
+    @Test
+    public void testKeySetDuplicateKeys() {
+
+        testmap.put("foo", 42);
+        testmap.put("foo", 99);
+        assertTrue(testmap.keySet().contains("foo"));
+        assertEquals(1, testmap.keySet().size());
+    }
+
 }

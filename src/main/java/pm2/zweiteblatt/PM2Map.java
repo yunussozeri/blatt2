@@ -1,5 +1,6 @@
 package pm2.zweiteblatt;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -146,7 +147,12 @@ public class PM2Map<K, V> implements Map<K, V> {
             // increase size if needed
             increaseSize();
         }
-
+/*
+        Note to self: when you add an elemt for the first time, the element is
+        added to the 0th index and cardinality marks the 1. index. This way,
+        you simultaneously store the number of elements as well as
+        the next appending position.
+        */
         MapPaar<K, V> pair = new MapPaar<>(key, value);
         // add element to map
         pairs[cardinality] = pair;
@@ -203,9 +209,15 @@ public class PM2Map<K, V> implements Map<K, V> {
         return null;
     }
 
+    /**
+     * Adds all elements in the given Map to PM2Map
+     * 
+     * @param m is the map of elements
+     */
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        m.forEach((key, value) -> put(key,value));
     }
 
     /**
@@ -214,13 +226,13 @@ public class PM2Map<K, V> implements Map<K, V> {
     @Override
     public void clear() {
         for (int i = 0; i < cardinality; i++) {
-            pairs[i] = null;
+            pairs[i] = new MapPaar();
         }
         cardinality = 0;
     }
 
     /**
-     * Creates a set of all the keys in the PM2Map.
+     * Creates a set of all the non empty pairs keys in the PM2Map.
      *
      * @return keys, the set containing all keys
      */
@@ -229,7 +241,7 @@ public class PM2Map<K, V> implements Map<K, V> {
         // create a set to store the keys
         Set<K> keys = new HashSet<>();
         for (var pair : pairs) {
-            if (pair != null && !pair.getKey().equals(new MapPaar().getKey())) {
+            if (pair != null) {
                 // get the current key
                 K currKey = pair.getKey();
                 // add to the set
@@ -240,9 +252,22 @@ public class PM2Map<K, V> implements Map<K, V> {
         return keys;
     }
 
+    /**
+     * Creates a collection of all non empty pairs values in the PM2Map.
+     * @return values is the collection of all values.
+     */
     @Override
     public Collection<V> values() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Collection values = new ArrayList<V>();
+        for (var pair : pairs) { // loop through pairs
+            if (pair != null) {
+                // get the current value
+                V currVal = pair.getValue();
+                // add to the list
+                values.add(currVal);
+            }
+        }
+        return values;
     }
 
     @Override

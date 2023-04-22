@@ -13,7 +13,7 @@ public class MapPaar <K,V> implements Map.Entry<K, V>{
     private V value;
     
     public MapPaar(){
-        this.key = (K)"Leer";
+        this.key = (K)"LEER";
         
     }
     
