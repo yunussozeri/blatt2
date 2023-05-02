@@ -38,6 +38,8 @@ public class ZweiteBlatt {
         List<Person> l = z.listOfRandomPeople();
         l.forEach((p) -> personmap.put(p.hashCode(), p));
         personmap.forEach((hash,person)-> System.out.println(person.toString()));
+        
+        
 
     }
 
