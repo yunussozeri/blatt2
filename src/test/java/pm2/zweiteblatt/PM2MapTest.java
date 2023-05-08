@@ -12,13 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author yunussozeri
+ * @author yunussozeri und oskar
  */
 public class PM2MapTest {
 
     private PM2Map testmap = new PM2Map();
 
     public PM2MapTest() {
+         testmap = new PM2Map<String,Integer>();
 
     }
 
@@ -156,6 +157,7 @@ public class PM2MapTest {
         String[] keyArr = {"A", "yunus", "oskar"};
         testmap.put(keyArr[0], 1);
         testmap.put(keyArr[1], 31);
+        assertEquals(2, testmap.size());
         testmap.put(keyArr[2], 32);
 
         testmap.remove(keyArr[0]);
@@ -172,8 +174,8 @@ public class PM2MapTest {
         testmap.put(keyArr[2], 32);
 
         testmap.remove(keyArr[0]);
+        assertEquals(2, testmap.size());
         testmap.remove(keyArr[1]);
-        
         assertEquals(1, testmap.size());
         testmap.remove(keyArr[2]);
 

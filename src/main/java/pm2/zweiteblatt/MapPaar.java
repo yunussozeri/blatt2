@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  *
- * @author yunussozeri
+ * @author yunussozeri und oskar
  */
 public class MapPaar <K,V> implements Map.Entry<K, V>{
 

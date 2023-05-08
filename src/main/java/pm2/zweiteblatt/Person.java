@@ -2,10 +2,10 @@ package pm2.zweiteblatt;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import com.google.common.base.Preconditions;
 /**
  *
- * @author yunussozeri
+ * @author yunussozeri und oskar
  */
 public class Person implements Comparable<Person> {
 
@@ -40,10 +40,50 @@ public class Person implements Comparable<Person> {
             int geburtstag,
             int anzahlKinder) {
         //TODO: Precondition, birth year not smaller than 1900
+        Preconditions.checkArgument(geburtsjahr>1900 ,
+                "Personen sind kein dinosaurier",
+                geburtsjahr);
+        Preconditions.checkArgument(geburtsmonat>0 && geburtsmonat<13,
+                "Ungültige Monat",
+                geburtsmonat);
+        Preconditions.checkArgument(geburtstag>0 && geburtsmonat<32,
+                "Ungültige Tag",
+                geburtstag);
         //TODO: Precondition number of children is larger or equal to 0.
+        Preconditions.checkArgument(
+                anzahlKinder >= 0,
+                "Anzahl kinder darf nicht negativ sein",
+                anzahlKinder);
         this.vorname = vorname;
         this.nachname = nachname;
         this.geburtsdatum = LocalDate.of(geburtsjahr, geburtsmonat, geburtstag);
+        this.anzahlKinder = anzahlKinder;
+    }
+    
+     public Person(String vorname,
+            String nachname,
+            LocalDate geburtsdatum,
+            int anzahlKinder) {
+        //TODO: Precondition, birth year not smaller than 1900
+        Preconditions.checkArgument(geburtsdatum.getYear()>1900 ,
+                "Personen sind kein dinosaurier",
+                geburtsdatum.getYear());
+        Preconditions.checkArgument( geburtsdatum.getMonthValue() >0 
+                                  && geburtsdatum.getMonthValue()<13,
+                "Ungültige Monat",
+                geburtsdatum.getMonthValue());
+        Preconditions.checkArgument(geburtsdatum.getDayOfMonth()>0 
+                                 && geburtsdatum.getDayOfMonth()<32,
+                "Ungültige Tag",
+                geburtsdatum.getDayOfMonth());
+        //TODO: Precondition number of children is larger or equal to 0.
+        Preconditions.checkArgument(
+                anzahlKinder >= 0,
+                "Anzahl kinder darf nicht negativ sein",
+                anzahlKinder);
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.geburtsdatum = geburtsdatum;
         this.anzahlKinder = anzahlKinder;
     }
 
@@ -69,6 +109,10 @@ public class Person implements Comparable<Person> {
      * @param anzahlKinder is the new number of children.
      */
     public void setAnzahlKinder(int anzahlKinder) {
+        Preconditions.checkArgument(
+                anzahlKinder >= 0,
+                "Anzahl kinder darf nicht negativ sein",
+                anzahlKinder);
         if(anzahlKinder < 0){
             return;
         }

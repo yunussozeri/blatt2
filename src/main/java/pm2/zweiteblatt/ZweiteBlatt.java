@@ -1,8 +1,12 @@
 package pm2.zweiteblatt;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  *
@@ -39,7 +43,17 @@ public class ZweiteBlatt {
         l.forEach((p) -> personmap.put(p.hashCode(), p));
         personmap.forEach((hash,person)-> System.out.println(person.toString()));
         
+        System.out.println("\nSorting in Process....");
         
+          List<Map.Entry<String, Person>> sort = personmap.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .filter(p -> p.getGeburtsdatum().isBefore(LocalDate.of(1984, 1, 1)))
+                .sorted((p1, p2) -> p1.compareTo(p2))
+                .map(p -> Map.entry(p.getVorname(), p))
+                .toList();
+          
+                sort.forEach(System.out::println);
 
     }
 
